@@ -143,7 +143,6 @@ export default function DataOpenWorkFromFilter({
           textButton={"حذف المستخدم"}
           state={"deleteOpenWorkDashboard"}
           api={`/api/work/delete-join/${userCurrentId}`}
-         
           keyFunction={[
             "getAvailableWorkFilterInDashboard",
             page,
@@ -155,11 +154,17 @@ export default function DataOpenWorkFromFilter({
             workInRemotly,
             selectedYear,
           ]}
-        
         />
       )}
       {openIframeCv && (
-        <IframCv linkCv={`${url}/userImages/${valueCv}`} cv={valueCv} />
+        <IframCv
+          linkCv={
+            valueCv?.includes("https")
+              ? valueCv
+              : `${url}/userImages/${valueCv}`
+          }
+          cv={valueCv}
+        />
       )}
     </div>
   );

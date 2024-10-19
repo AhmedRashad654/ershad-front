@@ -16,7 +16,7 @@ export default function AllDataApproveOpenWork() {
     setUserCurrentId,
     userCurrentId,
   } = useContext(ContextSimple);
-  
+
   const router = useRouter();
   const [valueCv, setValueCv] = useState(null);
   const [page, setPage] = useState(1);
@@ -26,7 +26,7 @@ export default function AllDataApproveOpenWork() {
       `/api/work/approved-freelancers?page=${page}&limit=${5}`
     );
   }
-  let { data } = useQuery({
+  let { data, refetch } = useQuery({
     queryKey: ["getAvailableWorkِApprove", page],
     queryFn: () => getAvailableWorkِApprove(page),
     keepPreviousData: true,
@@ -104,7 +104,12 @@ export default function AllDataApproveOpenWork() {
           </tbody>
         </table>
       </div>
-      <ButtonsLast page={page} setPage={setPage} meta={data?.data?.meta} />
+      <ButtonsLast
+        page={page}
+        setPage={setPage}
+        meta={data?.data?.meta}
+        refetch={refetch}
+      />
       {openDelete && (
         <Delete
           header={"حذف المستخدم"}
@@ -112,13 +117,18 @@ export default function AllDataApproveOpenWork() {
           textButton={"حذف المستخدم"}
           state={"deleteOpenWorkDashboard"}
           api={`/api/work/delete-join/${userCurrentId}`}
-          
           keyFunction={["getAvailableWorkِApprove", page]}
-       
         />
       )}
       {openIframeCv && (
-        <IframCv linkCv={`${url}/userImages/${valueCv}`} cv={valueCv} />
+        <IframCv
+          linkCv={
+            valueCv?.includes("https")
+              ? valueCv
+              : `${url}/userImages/${valueCv}`
+          }
+          cv={valueCv}
+        />
       )}
     </div>
   );

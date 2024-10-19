@@ -141,7 +141,7 @@ export default function ApplayOpenWork() {
             <div className="w-full relative">
               <InputOpenWork
                 name={"city"}
-                label={"    المدينة"}
+                label={"المدينة"}
                 type={"select"}
                 option={cities}
                 validation={{
